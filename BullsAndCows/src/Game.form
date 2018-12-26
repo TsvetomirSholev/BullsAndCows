@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Game">
+  <grid id="27dc6" binding="pnlStart" layout-manager="GridLayoutManager" row-count="25" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="567" height="589"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="5553e" class="javax.swing.JTextField" binding="txtNumPredict">
+        <constraints>
+          <grid row="3" column="1" row-span="13" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="6d697" class="javax.swing.JTextField" binding="txtNumP">
+        <constraints>
+          <grid row="1" column="1" row-span="2" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="abd13" class="javax.swing.JLabel" binding="lblNumP">
+        <constraints>
+          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="vyvedi chislo we"/>
+        </properties>
+      </component>
+      <component id="a9a8f" class="javax.swing.JButton" binding="btnStart">
+        <constraints>
+          <grid row="1" column="5" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="start "/>
+        </properties>
+      </component>
+      <component id="c8665" class="javax.swing.JButton" binding="btnPredict">
+        <constraints>
+          <grid row="16" column="1" row-span="7" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Predict"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="f850a" class="javax.swing.JLabel" binding="lblPredicP">
+        <constraints>
+          <grid row="5" column="0" row-span="8" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="poznai chisloto"/>
+          <visible value="true"/>
+        </properties>
+      </component>
+      <component id="c3112" class="javax.swing.JTextArea" binding="txtAreaMoves">
+        <constraints>
+          <grid row="24" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+          <enabled value="false"/>
+        </properties>
+      </component>
+      <component id="62b2" class="javax.swing.JTextArea" binding="txtAreaCompMoves">
+        <constraints>
+          <grid row="24" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="834ef" class="javax.swing.JButton" binding="btnNewGame">
+        <constraints>
+          <grid row="24" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <selected value="true"/>
+          <text value="New Game"/>
+          <visible value="false"/>
+        </properties>
+      </component>
+      <component id="94c36" class="javax.swing.JLabel" binding="lblPlayer">
+        <constraints>
+          <grid row="23" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="14"/>
+          <foreground color="-4520696"/>
+          <text value="Player:"/>
+        </properties>
+      </component>
+      <component id="56a03" class="javax.swing.JLabel" binding="lblComputer">
+        <constraints>
+          <grid row="23" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="14"/>
+          <foreground color="-14611781"/>
+          <text value="Computer:"/>
+        </properties>
+      </component>
+      <component id="7dde5" class="javax.swing.JLabel" binding="lblScoreComputer">
+        <constraints>
+          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="d5d3" class="javax.swing.JLabel" binding="lblScorePlayer">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="e737b" class="javax.swing.JLabel" binding="lblcheat">
+        <constraints>
+          <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="12"/>
+          <text value="cheat"/>
+          <visible value="false"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
