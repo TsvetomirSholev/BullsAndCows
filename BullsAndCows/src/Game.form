@@ -65,7 +65,7 @@
       </component>
       <component id="c3112" class="javax.swing.JTextArea" binding="txtAreaMoves">
         <constraints>
-          <grid row="24" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="24" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -76,7 +76,7 @@
       </component>
       <component id="62b2" class="javax.swing.JTextArea" binding="txtAreaCompMoves">
         <constraints>
-          <grid row="24" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="24" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -93,7 +93,7 @@
           <enabled value="true"/>
           <selected value="true"/>
           <text value="New Game"/>
-          <visible value="false"/>
+          <visible value="true"/>
         </properties>
       </component>
       <component id="94c36" class="javax.swing.JLabel" binding="lblPlayer">
