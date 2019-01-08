@@ -1,15 +1,16 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Game {
-    private static JFrame GAME = new JFrame("Bulls and Cows");
+
+    //Graphical Objects
     private JPanel pnlStart;
     private JTextField txtNumberPlayer;
     private JButton btnStart;
@@ -27,13 +28,16 @@ public class Game {
     private JLabel lblScorePlayer;
     private JLabel lblScoreComputer;
 
-
-    private String computerNumber;
+    //Backend variables
+    private static JFrame GAME = new JFrame("Bulls and Cows");
+    private static int playerVictoryCount;
+    private static int computerVictoryCount;
+    private static String[] computerBullsPlacementArray = {null, null, null, null};
     private int moves = 0;
+    private String computerNumber;
     private String computerPredictionNumber = "";
     private String playerNumber = "";
-    private static int playerWonCount;
-    private static int computerWonCount;
+
 
 
     public Game() {
@@ -47,12 +51,12 @@ public class Game {
 
             } else {
 
-                //Computer generates it's number
-                computerNumber = number();
+                //Computer generates it's computerGuessAndNumberGenerator
+                computerNumber = computerGuessAndNumberGenerator();
 
                 // Player and computer score
-                lblScorePlayer.setText("Player: " + playerWonCount + "");
-                lblScoreComputer.setText("Computer: " + computerWonCount + "");
+                lblScorePlayer.setText("Player: " + playerVictoryCount + "");
+                lblScoreComputer.setText("Computer: " + computerVictoryCount + "");
 
 
                 lblEnterPlayerNumber.setEnabled(false);
@@ -82,7 +86,7 @@ public class Game {
                 //TODO optimize computer predictions
                 //Increase moves count and set a value for the computer's prediction
                 moves++;
-                computerPredictionNumber = number() + "";
+                computerPredictionNumber = computerGuessAndNumberGenerator() + "";
 
                 String playerMoves = "On move " + moves + " number: \"" + playerPredictionNumber
                         + "\" has: "
@@ -104,7 +108,7 @@ public class Game {
                     txtNumberPlayer.setText("");
                 }
                 if (countingBulls(playerPredictionNumber, computerNumber) == 4) {
-                    playerWonCount++;
+                    playerVictoryCount++;
                     txtAreaPlayerMoves.append("Player won on the " + moves + " move with number: " + computerNumber);
                     btnNewGame.setVisible(true);
                     btnNewGame.setEnabled(true);
@@ -113,7 +117,7 @@ public class Game {
                 }
 
                 if (countingBulls(computerPredictionNumber, playerNumber) == 4) {
-                    computerWonCount++;
+                    computerVictoryCount++;
                     txtAreaComputerMoves.append("Computer won on the " + moves + " move with number: " + playerNumber);
                     btnNewGame.setVisible(true);
                     btnNewGame.setEnabled(true);
@@ -122,7 +126,7 @@ public class Game {
                     txtAreaComputerMoves.append(computerMoves + "\n");
 
                 }
-                writeScoreToFile(playerWonCount, computerWonCount);
+                writeScoreToFile(playerVictoryCount, computerVictoryCount);
                 txtNumberPredict.setText("");
 
             }
@@ -139,14 +143,14 @@ public class Game {
         });
     }
 
-    //TODO Optimise computer guesses
+    //TODO Optimise computer guesses MORE !!!
 
     //Cows counter
-    private Integer countingCows(String a, String b) {
+    private Integer countingCows(String guessingNumber, String guessedNumber) {
         int cows = 0;
         for (int i = 0; i < 4; i++) {
 
-            if (b.contains(a.charAt(i) + "") && b.charAt(i) != a.charAt(i)) {
+            if (guessedNumber.contains(guessingNumber.charAt(i) + "") && guessedNumber.charAt(i) != guessingNumber.charAt(i)) {
                 cows++;
             }
         }
@@ -155,11 +159,13 @@ public class Game {
     }
 
     //Bulls counter
-    private Integer countingBulls(String a, String b) {
+    private Integer countingBulls(String guessingNumber, String guessedNumber) {
         int bulls = 0;
+
         for (int i = 0; i < 4; i++) {
-            if (b.charAt(i) == a.charAt(i)) {
+            if (guessedNumber.charAt(i) == guessingNumber.charAt(i)) {
                 bulls++;
+                computerBullsPlacementArray[i] = guessedNumber.charAt(i) + "";
                 if (bulls == 4) {
                     btnNewGame.setEnabled(true);
                     btnPredict.setEnabled(false);
@@ -170,24 +176,59 @@ public class Game {
         return bulls;
     }
 
-    //A random 4 digit number generator
-    private String number() {
-        ArrayList<Integer> numb = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            numb.add(i);
+    //A random 4 digit computerGuessAndNumberGenerator generator - The biggest bullshit of this project
+    private String computerGuessAndNumberGenerator() {
+        int guessedCounter = 0;
+        List<Integer> numberList = IntStream.range(1,10).boxed().collect(Collectors.toList());
+        StringBuilder randomString = new StringBuilder();
+        Random rand = new Random();
+
+
+        for (int i = 0; i < computerBullsPlacementArray.length; i++) {
+            if (computerBullsPlacementArray[i] != null) {
+                guessedCounter++;
+            }
         }
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            Random rand = new Random();
-            int n = rand.nextInt(numb.size());
-            s.append(numb.get(n));
-            numb.remove(n);
+        if (guessedCounter == 0) {
+            for (int i = 0; i < 4; i++) {
+                randomStringBuilder(rand, randomString, numberList);
+            }
+            return randomString.toString();
+            //TODO: ELSE IF GuessCounter = 3 - fix bad performance
+        } else {
+            for (int i = 0; i < 4; i++) {
+                if (computerBullsPlacementArray[i] == null) {
+                    Random rand2 = new Random();
+                    int p = rand2.nextInt(numberList.size());
+                    randomString.append(numberList.get(p));
+                    numberList.remove(p);
+
+                    //difficulty adjustments
+//                    if (moves == 5) {
+//                        randomString = new StringBuilder(playerNumber);
+//                    }
+
+                } else {
+                    randomString.append(computerBullsPlacementArray[i]);
+                }
+
+            }
+            return randomString.toString();
         }
-        return s.toString();
+    }
+
+    //Had to make a separate method ,so that we have no code recurrences
+    private StringBuilder randomStringBuilder(Random random, StringBuilder stringBuilder, List<Integer> arrayList) {
+        int t = random.nextInt(arrayList.size());
+        stringBuilder.append(arrayList.get(t));
+        arrayList.remove(t);
+
+        return stringBuilder;
     }
 
     //Number validation method
     // TODO Maybe we can rewrite this algorithm
+
     private boolean isValid(String num) {
 
         int a = Integer.parseInt(num.charAt(0) + "");
@@ -199,7 +240,7 @@ public class Game {
 
     }
 
-    // Better off within a method ,because we have 3 or more uses if this code
+    // Better off within a method ,because we have 3 or more uses of this code
     private void invalidNumberError() {
         JFrame frame = new JFrame("message");
         JOptionPane.showMessageDialog(frame, "Invalid number", "Error", JOptionPane.ERROR_MESSAGE);
@@ -246,6 +287,7 @@ public class Game {
         GAME.setSize(900, 700);
         GAME.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         GAME.setVisible(true);
+        computerBullsPlacementArray = new String[]{null, null, null, null};
         readScoreFromFile();
     }
 
@@ -253,7 +295,7 @@ public class Game {
     // Application main method
     public static void main(String[] args) {
 
-        writeScoreToFile(playerWonCount, computerWonCount);
+        writeScoreToFile(playerVictoryCount, computerVictoryCount);
 
         GAME.setContentPane(new Game().pnlStart);
         GAME.setSize(900, 700);
