@@ -51,7 +51,7 @@ public class Game {
 
             } else {
 
-                //Computer generates it's computerGuessAndNumberGenerator
+                //Computer generates it's initial number !
                 computerNumber = computerGuessAndNumberGenerator();
 
                 // Player and computer score
@@ -78,16 +78,16 @@ public class Game {
         btnPredict.addActionListener(e -> {
 
             String playerPredictionNumber = txtNumberPredict.getText();
-
+            // First we check if the number is a valid one
             if (playerPredictionNumber.length() > 4 || playerPredictionNumber.length() < 4 || !isValid(playerPredictionNumber)) {
                 invalidNumberError();
             } else {
 
-                //TODO optimize computer predictions
                 //Increase moves count and set a value for the computer's prediction
                 moves++;
                 computerPredictionNumber = computerGuessAndNumberGenerator() + "";
 
+                //Sets the fields with the moves counter and number guessing history
                 String playerMoves = "On move " + moves + " number: \"" + playerPredictionNumber
                         + "\" has: "
                         + countingBulls(playerPredictionNumber, computerNumber)
@@ -126,6 +126,8 @@ public class Game {
                     txtAreaComputerMoves.append(computerMoves + "\n");
 
                 }
+
+                //Here we save the score to a file ,which is instantiated every time we restart the Application
                 writeScoreToFile(playerVictoryCount, computerVictoryCount);
                 txtNumberPredict.setText("");
 
@@ -134,6 +136,7 @@ public class Game {
         });
 
         btnNewGame.addActionListener(e -> newGame(pnlStart));
+        //The button, which is used only for debugging and stupid people !
         lblCheat.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -143,9 +146,9 @@ public class Game {
         });
     }
 
-    //TODO Optimise computer guesses MORE !!!
+    //Separate methods for counting bulls and cows , so we can see the code clearer and be more specific in future reimplementation of the Application
 
-    //Cows counter
+    //Cows countering method
     private Integer countingCows(String guessingNumber, String guessedNumber) {
         int cows = 0;
         for (int i = 0; i < 4; i++) {
@@ -158,7 +161,7 @@ public class Game {
 
     }
 
-    //Bulls counter
+    //Bulls counting method
     private Integer countingBulls(String guessingNumber, String guessedNumber) {
         int bulls = 0;
 
@@ -176,7 +179,7 @@ public class Game {
         return bulls;
     }
 
-    //A random 4 digit computerGuessAndNumberGenerator generator - The biggest bullshit of this project
+    //A random 4 digit number generator - The biggest bullshit of this project, this tested our mental health and nerves throughout the whole project
     private String computerGuessAndNumberGenerator() {
         int guessedCounter = 0;
         List<Integer> numberList = IntStream.range(1,10).boxed().collect(Collectors.toList());
@@ -194,7 +197,9 @@ public class Game {
                 randomStringBuilder(rand, randomString, numberList);
             }
             return randomString.toString();
+            // A certain problem occurred when we perfected the guesses of the computer - it started guessing the number in 4-7 moves
             //TODO: ELSE IF GuessCounter = 3 - fix bad performance
+
         } else {
             for (int i = 0; i < 4; i++) {
                 if (computerBullsPlacementArray[i] == null) {
@@ -203,7 +208,8 @@ public class Game {
                     randomString.append(numberList.get(p));
                     numberList.remove(p);
 
-                    //difficulty adjustments
+                    //difficulty adjustments for hardcore/soft players
+
 //                    if (moves == 5) {
 //                        randomString = new StringBuilder(playerNumber);
 //                    }
@@ -227,7 +233,7 @@ public class Game {
     }
 
     //Number validation method
-    // TODO Maybe we can rewrite this algorithm
+    // TODO Maybe we can rewrite this algorithm but it certainly looks good for now
 
     private boolean isValid(String num) {
 
@@ -247,7 +253,7 @@ public class Game {
         txtNumberPlayer.setText("");
     }
 
-    //Writes both scores to a file
+    //Writes both scores to a file , so that we can reuse them when new game is initialised
     private static void writeScoreToFile(Integer pScore, Integer compScore) {
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
@@ -263,7 +269,7 @@ public class Game {
 
     }
 
-    // Reads score form the file and sets its values
+    // Reads score form the file and sets values to the scores
     private void readScoreFromFile() {
         try (final LineNumberReader lineNumberReader = new LineNumberReader(new FileReader("dataBase.txt"))) {
             String line;
