@@ -3,7 +3,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -38,7 +38,7 @@ public class Game {
     private String computerNumber;
     private String computerPredictionNumber = "";
     private String playerNumber = "";
-    private LinkedList<String> usedPredictions=new LinkedList<>();
+    private ArrayList<String> usedPredictions=new ArrayList<>();
 
 
 
