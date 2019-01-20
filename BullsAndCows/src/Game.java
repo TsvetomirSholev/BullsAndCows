@@ -3,6 +3,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class Game {
     private String computerNumber;
     private String computerPredictionNumber = "";
     private String playerNumber = "";
+    private LinkedList<String> usedPredictions=new LinkedList<>();
 
 
 
@@ -71,7 +73,7 @@ public class Game {
                 btnStart.setEnabled(false);
                 btnPredict.setEnabled(true);
                 btnNewGame.setEnabled(false);
-
+                usedPredictions.clear();
             }
 
         });
@@ -85,8 +87,10 @@ public class Game {
 
                 //Increase moves count and set a value for the computer's prediction
                 moves++;
-                computerPredictionNumber = computerGuessAndNumberGenerator() + "";
-
+                do {
+                    computerPredictionNumber = computerGuessAndNumberGenerator() + "";
+                }while (!isValid(computerPredictionNumber)||usedPredictions.contains(computerPredictionNumber));
+                usedPredictions.add(computerPredictionNumber);
                 //Sets the fields with the moves counter and number guessing history
                 String playerMoves = "On move " + moves + " number: \"" + playerPredictionNumber
                         + "\" has: "
@@ -179,7 +183,9 @@ public class Game {
         return bulls;
     }
 
-    //A random 4 digit number generator - The biggest bullshit of this project, this tested our mental health and nerves throughout the whole project
+    //
+    // A random 4 digit number generator - The biggest bullshit of this project, this tested our mental health and nerves throughout the whole project
+    // yes it's true
     private String computerGuessAndNumberGenerator() {
         int guessedCounter = 0;
         List<Integer> numberList = IntStream.range(1,10).boxed().collect(Collectors.toList());
